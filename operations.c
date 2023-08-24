@@ -4,13 +4,20 @@
  *Return: void
  */
 
-void _push(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _push(stack_t **stack, unsigned int line_number)
 {
 stack_t *new_node = malloc(sizeof(stack_t));
+int value;
+
 if (new_node == NULL)
 return;
-
-new_node->n = 15;
+value = atoi(data.opcode_value);
+if (value == 0)
+{
+fprintf(stderr, "L<%d>: usage: push integer\n", line_number);
+exit(EXIT_FAILURE);
+}
+new_node->n = value;
 new_node->next = NULL;
 new_node->prev = NULL;
 
@@ -23,17 +30,20 @@ return;
 (*stack)->prev = new_node;
 new_node->next = *stack;
 *stack = new_node;
+
+ printf("%d\n", value);
 return;
   
 }
 
-void _pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
+void _pall(stack_t **stack, unsigned int line_number)
 {
 stack_t *temp = *stack;
-  
-if (temp == NULL)
-return;
 
+if (temp == NULL)
+{
+fprintf(stderr, "L<%d>: unknown instruction <opcode>\n", line_number);
+}
 while (temp != NULL)
 {
 printf("%d\n", temp->n);

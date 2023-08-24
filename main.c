@@ -5,12 +5,15 @@
  *@argv: array of arguments
  *Return: 0
  */
+value_t data;
 
 int main(int argc, char *argv[])
 {
 FILE *file = NULL;
 char buffer[1024];
 int line_number = 0;
+void (*f)(stack_t **stack, unsigned int line_number);
+stack_t *stack = NULL;
 if (argc > 2)
 exit(EXIT_FAILURE);
 
@@ -30,7 +33,9 @@ exit(EXIT_FAILURE);
 while(fgets(buffer, 1024, file) != NULL)
 {
 line_number++;
-_get_opcode_function(buffer);
+f = _get_opcode_function(buffer, &data);
+
+f(&stack, line_number);
 }
 
 return (0);  

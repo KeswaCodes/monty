@@ -37,7 +37,18 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void _get_opcode_function(char *buffer);
+/**
+ *struct value_s - structure for the opcode value
+ *@opcodeValue: opcode value
+ */
+typedef struct value_s
+{
+char *opcode_value;
+} value_t;
+
+extern value_t data;
+
 void _pall(stack_t **stack, unsigned int line_number);
 void _push(stack_t **stack, unsigned int line_number);
+void (*_get_opcode_function(char *buffer, value_t *data))(stack_t **, unsigned int);
 #endif
